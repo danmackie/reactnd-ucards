@@ -16,3 +16,45 @@
 //
 //Props:
 //TBC
+
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { connect } from "react-redux";
+
+class DeckView extends Component {
+
+  state = {
+    hascards: false
+  }
+
+  render() {
+    const { hascards } = this.state
+    return (
+      hascards
+        ?
+        <View>
+          <Text style={styles.textstyle}>
+            DeckView
+          </Text>
+        </View>
+        :
+        //TODO: ADD LOADER
+        <View>
+          <Text>Loading...</Text>
+        </View>
+    )
+  }
+}
+
+const mapStateToProps = decks => ({
+  //TODO: Get deck from key in decks
+  deck: decks
+});
+
+export default connect(mapStateToProps)(DeckView)
+
+const styles = StyleSheet.create({
+  textstyle: {
+    fontFamily: 'sura-bold',
+  },
+});

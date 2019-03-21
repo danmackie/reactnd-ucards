@@ -14,10 +14,10 @@
 //Add card button onClick  
 //
 //Data:
-//
+//NONE
 //
 //Props:
-//TBC
+//Callback function
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -35,7 +35,7 @@ class NewCardView extends Component {
 }
 
 NewCardView.propTypes = {
-  deck = PropTypes.object.isRequired,
+  callbackfunction = PropTypes.func.isRequired,
 }
 
 export default NewCardView
