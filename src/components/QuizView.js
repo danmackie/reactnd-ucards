@@ -38,10 +38,6 @@ class QuizView extends Component {
   }
 }
 
-QuizView.propTypes = {
-  deck = PropTypes.object.isRequired,
-}
-
 export default QuizView
 
 const styles = StyleSheet.create({

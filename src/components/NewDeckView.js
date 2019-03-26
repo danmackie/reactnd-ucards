@@ -19,29 +19,115 @@
 //Props:
 //Callback function
 
-import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { KeyboardAvoidingView, StyleSheet, Text } from "react-native";
+// import { KeyboardAvoidingView, StyleSheet, Text, TextInput } from "react-native";
+import { Button, TextInput } from 'react-native-paper';
+import { connect } from "react-redux";
+import { addDeck } from "../actions";
+import { saveDeck } from "../utils/api";
+import { pink, white } from "../utils/colors";
+import { createNewDeckObject } from "../utils/helpers";
 
 class NewDeckView extends Component {
+
+  state = {
+    text: ""
+  }
+
+  handleChange = text => {
+    this.setState(() => ({
+      text
+    }))
+  }
+
+  handleCancel = () => {
+    //TODO:
+  }
+
+  handleSubmit = () => {
+    deck = createNewDeckObject(this.state.input)
+    this.props.dispatch(addDeck(deck.id, deck.title))
+    // dispatch(addDeck(id, deckName)
+    saveDeck(deck)
+
+    this.props.navigation.navigate("DeckView", {
+      id: deck.id,
+      deckname: deck.title
+    })
+
+    this.setState(() => ({
+      input: ""
+    }))
+  }
+
   render() {
+    const { text } = this.state;
     return (
-      <View>
-        <Text style={styles.textstyle}>
-          NewDeckView
-        </Text>
-      </View>
-    );
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <Text style={styles.textstyle}>Add your new deck</Text>
+        <TextInput
+          style={styles.input}
+          label='Deck name'
+          value={text}
+          placeholder="Subject..."
+          onChangeText={this.handleChange}
+        />
+        {/* <View style={styles.right}>
+          <Button style={styles.cancelbtn} mode="text" onPress={this.handleCancel}>
+            Cancel
+          </Button> */}
+        <Button style={styles.addbtn} mode="contained" onPress={this.handleSubmit}>
+          Add deck
+          </Button>
+        {/* </View> */}
+      </KeyboardAvoidingView>
+    )
   }
 }
 
-NewDeckView.propTypes = {
-  callbackfunction = PropTypes.func.isRequired,
-}
-
-export default NewDeckView
-
 const styles = StyleSheet.create({
-  textstyle: {
-    fontFamily: 'sura-bold',
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
-});
+  textstyle: {
+    fontSize: 32,
+    fontFamily: 'sura-bold',
+    // textAlign: 'center',
+  },
+  input: {
+    backgroundColor: white,
+    width: 350,
+    // fontSize: 20,
+    height: 100,
+    // padding: 10,
+    // borderRadius: 1,
+    // borderColor: gray,
+    // margin: 20,
+  },
+  addbtn: {
+    backgroundColor: pink,
+    paddingTop: 4,
+    paddingBottom: 4,
+    margin: 20,
+    alignSelf: 'flex-end',
+  },
+  cancelbtn: {
+    paddingTop: 4,
+    paddingBottom: 4,
+    margin: 20,
+    alignSelf: 'flex-end',
+  },
+  right: {
+    justifyContent: "flex-end",
+  },
+})
+
+// const mapDispatchToProps = dispatch => ({
+//   createDeck: (id, deckName) => dispatch(addDeck(id, deckName))
+// })
+
+export default connect(NewDeckView)
+// export default connect(null, mapDispatchToProps)(NewDeckView)

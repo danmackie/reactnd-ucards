@@ -10,6 +10,8 @@ export function addDeck(deck) {
 }
 
 export function setDecks(decks) {
+  console.log('ACTIONs decks: ', decks);
+
   return {
     type: SET_DECKS,
     decks,

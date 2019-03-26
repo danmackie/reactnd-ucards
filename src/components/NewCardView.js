@@ -34,10 +34,6 @@ class NewCardView extends Component {
   }
 }
 
-NewCardView.propTypes = {
-  callbackfunction = PropTypes.func.isRequired,
-}
-
 export default NewCardView
 
 const styles = StyleSheet.create({

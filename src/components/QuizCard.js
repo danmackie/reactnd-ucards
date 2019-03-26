@@ -13,7 +13,6 @@
 //Props:
 //Question, Answer
 
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -26,11 +25,6 @@ const QuizCard = () => {
     </View>
   );
 };
-
-QuizCard.propTypes = {
-  question = PropTypes.string.isRequired,
-  answer = PropTypes.string.isRequired,
-}
 
 export default QuizCard;
 

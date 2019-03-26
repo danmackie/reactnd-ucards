@@ -1,13 +1,13 @@
 import { ADD_CARD, ADD_DECK, SET_DECKS } from '../actions';
 
-function decks(state = null, action) {
+const decks = (state = null, action) => {
   switch (action.type) {
     case SET_DECKS:
       return {
         ...state,
-        ...action.deck
-      }
-    case ADD_DECK:
+        ...action.decks
+      };
+    case ADD_DECK: {
       return {
         ...state,
         [action.id]: {
@@ -15,8 +15,9 @@ function decks(state = null, action) {
           name: action.name,
           cards: []
         }
-      }
-    case ADD_CARD:
+      };
+    }
+    case ADD_CARD: {
       return {
         ...state,
         [action.deckId]: {
@@ -26,10 +27,11 @@ function decks(state = null, action) {
             { question: action.question, answer: action.answer }
           ]
         }
-      }
+      };
+    }
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default decks
+export default decks;

@@ -1,36 +1,77 @@
+import { Feather } from "@expo/vector-icons";
 import { Constants, Font } from 'expo';
 import React from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import { Provider } from 'react-redux';
+import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { Provider as StoreProvider } from 'react-redux';
 import { createStore } from 'redux';
 import DeckListView from './src/components/DeckListView';
+import DeckView from './src/components/DeckView';
+import NewCardView from './src/components/NewCardView';
+import NewDeckView from './src/components/NewDeckView';
+import QuizView from './src/components/QuizView';
 import reducer from './src/reducers';
 import { purple, white } from './src/utils/colors';
 
-function UCardsStatusBar({ backgroundColor, ...props }) {
-  return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </View>
-  )
-}
+const UCardsStatusBar = ({ backgroundColor, ...props }) => (
+  <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+    <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+  </View>
+)
 
-// const MainNavigator = createAppContainer(createStackNavigator({
-//   home: {
-//     screen: DeckListView,
-//     navigationOptions: {
-//       header: null,
-//     },
-//   },
-// }));
-
-const MainNavigator = createStackNavigator(
+const Tabs = createBottomTabNavigator(
   {
-    Home: DeckListView,
-    // DeckDetail: DeckDetail,
-    // AddCard: AddCard,
-    // Quiz: Quiz
+    DeckListView: {
+      screen: DeckListView,
+      navigationOptions: {
+        tabBarLabel: "Decks",
+        tabBarIcon: ({ tintColor }) => (
+          <Feather name="list" size={30} color={tintColor} />
+        )
+      }
+    },
+    NewDeckView: {
+      screen: NewDeckView,
+      navigationOptions: {
+        tabBarLabel: "Add deck",
+        tabBarIcon: ({ tintColor }) => (
+          <Feather name="plus" size={30} color={tintColor} />
+        )
+      }
+    }
+  },
+  {
+    navigationOptions: {
+      header: null
+    },
+    tabBarOptions: {
+      activeTintColor: purple,
+      style: {
+        height: 60,
+        backgroundColor: white,
+        shadowColor: "rgba(0, 0, 0, 0.24)",
+        shadowOffset: {
+          width: 0,
+          height: 3
+        },
+        shadowRadius: 6,
+        shadowOpacity: 1
+      },
+      labelStyle: {
+        paddingTop: 3,
+        fontSize: 14,
+        fontWeight: "bold"
+      }
+    }
+  }
+);
+
+const AppContainer = createAppContainer(createStackNavigator(
+  {
+    Home: Tabs,
+    DeckView: DeckView,
+    NewCardView: NewCardView,
+    QuizView: QuizView
   },
   {
     initialRouteName: "Home",
@@ -40,7 +81,7 @@ const MainNavigator = createStackNavigator(
       headerTitleStyle: { fontWeight: "bold" }
     }
   }
-);
+))
 
 export default class App extends React.Component {
 
@@ -52,6 +93,8 @@ export default class App extends React.Component {
     await Font.loadAsync({
       'sura-bold': require('./assets/fonts/Sura-Bold.ttf'),
       'sura': require('./assets/fonts/Sura-Regular.ttf'),
+      'material': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
+      'feather': require('./node_modules/react-native-vector-icons/Fonts/Feather.ttf')
     });
     //setLocalNotification();
     this.setState({ fontLoaded: true });
@@ -60,22 +103,18 @@ export default class App extends React.Component {
   render() {
     return (
       this.state.fontLoaded &&
-      <Provider store={createStore(reducer)}>
+      <StoreProvider store={createStore(reducer)}>
         <View style={styles.container}>
           <UCardsStatusBar backgroundColor={purple} barStyle="light-content" />
-          <DeckListView />
+          <AppContainer />
         </View>
-      </Provider>
-    );
+      </StoreProvider>
+    )
   }
-
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   }
 });
