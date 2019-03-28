@@ -1,4 +1,4 @@
-import { Feather } from "@expo/vector-icons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Constants, Font } from 'expo';
 import React from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
@@ -26,7 +26,7 @@ const Tabs = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Decks",
         tabBarIcon: ({ tintColor }) => (
-          <Feather name="list" size={30} color={tintColor} />
+          <MaterialIcons name="layers" size={30} color={tintColor} />
         )
       }
     },
@@ -35,7 +35,7 @@ const Tabs = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Add deck",
         tabBarIcon: ({ tintColor }) => (
-          <Feather name="plus" size={30} color={tintColor} />
+          <MaterialIcons name="add" size={30} color={tintColor} />
         )
       }
     }
@@ -94,7 +94,7 @@ export default class App extends React.Component {
       'sura-bold': require('./assets/fonts/Sura-Bold.ttf'),
       'sura': require('./assets/fonts/Sura-Regular.ttf'),
       'material': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
-      'feather': require('./node_modules/react-native-vector-icons/Fonts/Feather.ttf')
+      // 'feather': require('./node_modules/react-native-vector-icons/Fonts/Feather.ttf')
     });
     //setLocalNotification();
     this.setState({ fontLoaded: true });

@@ -1,23 +1,6 @@
-//TODO: Create representation for DeckList, click on deck in list opens it, FAB button + adds deck
-//Type: Redux component
-//
-//UI
-//Scrolling lazy load list of DeckStack comps
-//FAB button to add new deck
-//
-//Functionality:
-//FAB onClick => Goes to NewDeckView
-//DeckStack onClick => Goes to DeckView
-//
-//Data:
-//Array of deck objects - i.e all data
-//
-//Props:
-//TBC
-
 import React, { Component } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { FAB } from 'react-native-paper';
+import { ActivityIndicator, FAB } from 'react-native-paper';
 import { connect } from "react-redux";
 import { setDecks } from "../actions/";
 import { getDecks } from "../utils/api";
@@ -33,7 +16,7 @@ class DeckListView extends Component {
   componentDidMount() {
     getDecks()
       .then(
-        decks => this.props.setDecks(decks)
+        decks => this.props.dispatch(setDecks(decks))
       )
       .then(() => {
         this.setState({ loaded: true });
@@ -44,7 +27,7 @@ class DeckListView extends Component {
     const { decks, navigation } = this.props
     const { loaded } = this.state
 
-    // console.log('DeckLostView >>> Decks = ', decks)
+    // console.log('DeckListView >>> Decks = ', decks)
 
     return (
       loaded
@@ -81,9 +64,10 @@ class DeckListView extends Component {
             </View>
           </View>
         :
-        //TODO: ADD LOADER
-        <View>
-          <Text>Loading...</Text>
+        //LOADING...
+        <View style={styles.container_empty}>
+          <Text style={styles.textstyle}>Loading your decks</Text>
+          <ActivityIndicator size='large' style={styles.flatliststyle} animating={true} color={pink} />
         </View>
     )
   }
@@ -93,11 +77,7 @@ const mapStateToProps = decks => ({
   decks
 });
 
-const mapDispatchToProps = dispatch => ({
-  setDecks: decks => dispatch(setDecks(decks))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DeckListView)
+export default connect(mapStateToProps)(DeckListView)
 
 const styles = StyleSheet.create({
   container: {

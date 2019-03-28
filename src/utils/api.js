@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 
-const TESTMODE = false
+let TESTMODE = true
 //DUMMY DATA
 const getDummyData = () => {
   let dummydecks = {
@@ -37,6 +37,7 @@ const getDummyData = () => {
       ]
     }
   }
+  !TESTMODE
   return dummydecks
 }
 
@@ -45,7 +46,7 @@ export const STORAGE_KEY = "Udacity:Storagekey"
 export const getDecks = () => {
   return AsyncStorage.getItem(STORAGE_KEY).then(results => {
     const data = JSON.parse(results)
-    console.log('API getDecks: ', data)
+    // console.log('API getDecks: ', data)
     return TESTMODE ? getDummyData() : data
   })
 }

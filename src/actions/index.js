@@ -2,16 +2,16 @@ export const ADD_DECK = 'ADD_DECK'
 export const SET_DECKS = 'SET_DECKS'
 export const ADD_CARD = 'ADD_CARD'
 
-export function addDeck(deck) {
+export function addDeck(id, title, bgcolor) {
   return {
     type: ADD_DECK,
-    deck,
+    id,
+    title,
+    bgcolor,
   }
 }
 
 export function setDecks(decks) {
-  console.log('ACTIONs decks: ', decks);
-
   return {
     type: SET_DECKS,
     decks,

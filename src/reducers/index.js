@@ -6,16 +6,17 @@ const decks = (state = null, action) => {
       return {
         ...state,
         ...action.decks
-      };
+      }
     case ADD_DECK: {
       return {
         ...state,
         [action.id]: {
           id: action.id,
-          name: action.name,
+          title: action.title,
+          bgcolor: action.bgcolor,
           cards: []
         }
-      };
+      }
     }
     case ADD_CARD: {
       return {
@@ -27,11 +28,11 @@ const decks = (state = null, action) => {
             { question: action.question, answer: action.answer }
           ]
         }
-      };
+      }
     }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default decks;
+export default decks

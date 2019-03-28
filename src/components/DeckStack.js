@@ -39,15 +39,6 @@ const DeckStack = ({ bgcolor, navigation, numcards, deckname, id }) => (
 export default DeckStack;
 
 const styles = StyleSheet.create({
-  textstyle: {
-    fontFamily: 'sura-bold',
-  },
-  container: {
-    flex: 1,
-  },
-  content: {
-    padding: 4,
-  },
   card: {
     margin: 4,
     padding: 4,
@@ -55,6 +46,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   title: {
+    paddingTop: 7,
+    fontFamily: 'sura-bold',
     fontSize: 32,
   },
   titlenum: {

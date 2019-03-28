@@ -32,12 +32,12 @@ import { createNewDeckObject } from "../utils/helpers";
 class NewDeckView extends Component {
 
   state = {
-    text: ""
+    title: ""
   }
 
-  handleChange = text => {
+  handleChange = title => {
     this.setState(() => ({
-      text
+      title
     }))
   }
 
@@ -46,30 +46,31 @@ class NewDeckView extends Component {
   }
 
   handleSubmit = () => {
-    deck = createNewDeckObject(this.state.input)
-    this.props.dispatch(addDeck(deck.id, deck.title))
-    // dispatch(addDeck(id, deckName)
-    saveDeck(deck)
+    //create empty deck with title from state
+    deck = createNewDeckObject(this.state.title)
 
+    this.props.dispatch(addDeck(deck.id, deck.title, deck.bgcolor))
+    saveDeck(deck)
+    // navigation.navigate("DeckView", { id: id, deckname: deckname })
     this.props.navigation.navigate("DeckView", {
       id: deck.id,
       deckname: deck.title
     })
 
     this.setState(() => ({
-      input: ""
+      title: ""
     }))
   }
 
   render() {
-    const { text } = this.state;
+    const { title } = this.state;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.textstyle}>Add your new deck</Text>
         <TextInput
           style={styles.input}
           label='Deck name'
-          value={text}
+          value={title}
           placeholder="Subject..."
           onChangeText={this.handleChange}
         />
@@ -85,6 +86,12 @@ class NewDeckView extends Component {
     )
   }
 }
+
+// const mapDispatchToProps = dispatch => ({
+//   createDeck: (id, deckName) => dispatch(addDeck(id, deckName))
+// })
+
+export default connect()(NewDeckView)
 
 const styles = StyleSheet.create({
   container: {
@@ -124,10 +131,3 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 })
-
-// const mapDispatchToProps = dispatch => ({
-//   createDeck: (id, deckName) => dispatch(addDeck(id, deckName))
-// })
-
-export default connect(NewDeckView)
-// export default connect(null, mapDispatchToProps)(NewDeckView)

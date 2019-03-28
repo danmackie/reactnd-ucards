@@ -19,7 +19,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button, FAB } from 'react-native-paper';
+import { ActivityIndicator, Button, FAB } from 'react-native-paper';
 import { connect } from "react-redux";
 import SingleCard from '../components/SingleCard';
 import { pink, white } from '../utils/colors';
@@ -35,6 +35,8 @@ class DeckView extends Component {
   })
 
   componentDidMount() {
+    console.log('this.props.deck = ', this.props.deck);
+
     this.setState({ hascards: this.props.deck.cards.length > 0 });
   }
 
@@ -59,14 +61,17 @@ class DeckView extends Component {
           />
         </View>
         :
-        <View>
-          <Text>Loading...</Text>
+        //LOADING...
+        <View style={styles.container_empty}>
+          <Text style={styles.textstyle}>Loading your deck</Text>
+          <ActivityIndicator size='large' style={styles.paddout} animating={true} color={pink} />
         </View>
     )
   }
 }
 
 const mapStateToProps = (state, { navigation }) => {
+  // console.log('state[navigation.getParam("id")] = ', state[navigation.getParam("id")]);
   return {
     deck: state[navigation.getParam("id")]
   }
@@ -75,8 +80,17 @@ const mapStateToProps = (state, { navigation }) => {
 export default connect(mapStateToProps)(DeckView)
 
 const styles = StyleSheet.create({
+  container_empty: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  paddout: {
+    padding: 10,
+  },
   textstyle: {
+    fontSize: 32,
     fontFamily: 'sura-bold',
+    textAlign: 'center',
   },
   startquizbtn: {
     backgroundColor: pink,
