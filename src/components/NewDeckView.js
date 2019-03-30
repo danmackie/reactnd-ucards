@@ -35,7 +35,7 @@ class NewDeckView extends Component {
     title: ""
   }
 
-  handleChange = title => {
+  handleChangeQ = title => {
     this.setState(() => ({
       title
     }))
@@ -80,7 +80,7 @@ class NewDeckView extends Component {
           </Button> */}
         <Button style={styles.addbtn} mode="contained" onPress={this.handleSubmit}>
           Add deck
-          </Button>
+        </Button>
         {/* </View> */}
       </KeyboardAvoidingView>
     )

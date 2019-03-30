@@ -19,7 +19,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ActivityIndicator, Button, FAB } from 'react-native-paper';
+import { Button, FAB } from 'react-native-paper';
 import { connect } from "react-redux";
 import SingleCard from '../components/SingleCard';
 import { pink, white } from '../utils/colors';
@@ -35,9 +35,16 @@ class DeckView extends Component {
   })
 
   componentDidMount() {
-    console.log('this.props.deck = ', this.props.deck);
-
+    // console.log('this.props.deck = ', this.props.deck);
     this.setState({ hascards: this.props.deck.cards.length > 0 });
+  }
+
+  callbackAddCard = (question, answer) => {
+
+  }
+
+  handleAddCard = () => {
+    this.props.navigation.navigate("NewCardView", { callbackAddCard: this.callbackAddCard() })
   }
 
   render() {
@@ -57,14 +64,21 @@ class DeckView extends Component {
             color={white}
             label='Add card'
             icon="add"
-            onPress={() => console.log('Pressed')}
+            onPress={this.handleAddCard}
           />
         </View>
         :
         //LOADING...
         <View style={styles.container_empty}>
-          <Text style={styles.textstyle}>Loading your deck</Text>
-          <ActivityIndicator size='large' style={styles.paddout} animating={true} color={pink} />
+          <Text style={styles.textstyle}>Your deck is empty, add your first card!</Text>
+          <FAB
+            style={styles.fabempty}
+            color={white}
+            label='Add card'
+            icon="add"
+            onPress={this.handleAddCard}
+          />
+          {/* <ActivityIndicator size='large' style={styles.paddout} animating={true} color={pink} /> */}
         </View>
     )
   }
@@ -83,6 +97,7 @@ const styles = StyleSheet.create({
   container_empty: {
     flex: 1,
     justifyContent: 'center',
+    textAlign: 'center',
   },
   paddout: {
     padding: 10,
@@ -107,6 +122,13 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+    color: white,
+    backgroundColor: pink,
+  },
+  fabempty: {
+    marginTop: 20,
+    alignSelf: 'center',
+    width: 150,
     color: white,
     backgroundColor: pink,
   },
