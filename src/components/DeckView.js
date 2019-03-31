@@ -44,7 +44,8 @@ class DeckView extends Component {
   }
 
   handleAddCard = () => {
-    this.props.navigation.navigate("NewCardView", { callbackAddCard: this.callbackAddCard() })
+    const { deck } = this.props
+    this.props.navigation.navigate("NewCardView", { deckId: deck.id })
   }
 
   render() {

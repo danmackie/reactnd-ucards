@@ -1,27 +1,9 @@
-//TODO:
-//Type: Standard stateful component
-//
-//UI
-//Two text input fields ('Question' and 'Answer')
-//A button to 'Add card'
-//A 'Cancel' button
-//A header 'Add new card'
-//A Back arrow in header
-//
-//Functionality:
-//State checking field input to effect Add button disabled
-//(Char counters optional on fields)
-//Add card button onClick  
-//
-//Data:
-//NONE
-//
-//Props:
-//Callback function
-
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
+import { connect } from "react-redux";
+import { addCard } from "../actions";
+import { saveCard } from "../utils/api";
 import { pink, white } from "../utils/colors";
 
 class NewCardView extends Component {
@@ -31,23 +13,29 @@ class NewCardView extends Component {
     answer: "",
   }
 
-  handleChangeQ = question => {
-    this.setState(() => ({
-      question
-    }))
-  }
+  static navigationOptions = () => ({
+    title: 'Add card'
+  })
 
-  handleChangeA = answer => {
-    this.setState(() => ({
-      answer
-    }))
+  handleAddCard = () => {
+    id = this.props.navigation.getParam("deckId")
+    const { question, answer } = this.state
+
+    this.props.dispatch(addCard(id, question, answer))
+    saveCard(id, question, answer)
+
+    this.props.navigation.goBack()
+
+    //Reset state
+    this.setState({
+      question: "",
+      answer: ""
+    })
   }
 
   render() {
-    const { callbackAddCard } = this.props.navigation.getParam("callbackAddCard")
-    // console.log('callbackAddCard = ', this.props.navigation.getParam("callbackAddCard"));
-
     const { question, answer } = this.state
+
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Text style={styles.textstyle}>Add your card</Text>
@@ -55,24 +43,23 @@ class NewCardView extends Component {
           style={styles.input}
           value={question}
           label='Question'
-          onChangeText={this.handleChangeQ}
+          onChangeText={question => this.setState({ question })}
         />
         <TextInput
           style={styles.input}
           value={answer}
           label='Answer'
-          onChangeText={this.handleChangeA}
+          onChangeText={answer => this.setState({ answer })}
         />
-        {/* <Button style={styles.addbtn} mode="contained"> */}
-        <Button style={styles.addbtn} mode="contained" onPress={this.props.navigation.getParam("callbackAddCard")(question, answer)}>
+        <Button style={styles.addbtn} mode="contained" onPress={this.handleAddCard}>
           Add card
         </Button>
       </KeyboardAvoidingView >
-    );
+    )
   }
 }
 
-export default NewCardView
+export default connect()(NewCardView)
 
 const styles = StyleSheet.create({
   container: {

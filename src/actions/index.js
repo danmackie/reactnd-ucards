@@ -18,10 +18,14 @@ export function setDecks(decks) {
   }
 }
 
-export function addCard(deckId, question, answer) {
+export function addCard(id, question, answer) {
+  console.log('id = ', id);
+  console.log('question = ', question);
+  console.log('answer = ', answer);
+
   return {
     type: ADD_CARD,
-    deckId,
+    id,
     question,
     answer
   }

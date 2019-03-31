@@ -21,10 +21,10 @@ const decks = (state = null, action) => {
     case ADD_CARD: {
       return {
         ...state,
-        [action.deckId]: {
-          ...state[action.deckId],
+        [action.id]: {
+          ...state[action.id],
           cards: [
-            ...state[action.deckId].cards,
+            ...state[action.id].cards,
             { question: action.question, answer: action.answer }
           ]
         }

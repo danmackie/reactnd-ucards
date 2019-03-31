@@ -35,7 +35,7 @@ class NewDeckView extends Component {
     title: ""
   }
 
-  handleChangeQ = title => {
+  handleChange = title => {
     this.setState(() => ({
       title
     }))

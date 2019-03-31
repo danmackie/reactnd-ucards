@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 
-let TESTMODE = true
+let TESTMODE = false
 //DUMMY DATA
 const getDummyData = () => {
   let dummydecks = {
@@ -58,16 +58,19 @@ export const saveDeck = deck => {
   )
 }
 
-export const saveCard = (deckId, card) => {
+export const saveCard = (id, question, answer) => {
   return AsyncStorage.getItem(STORAGE_KEY).then(results => {
     const data = JSON.parse(results)
+    console.log('id = ', id);
+    console.log('question = ', question);
+    console.log('answer = ', answer);
+    console.log('data = ', data);
 
-    // Add card to existing deck data.
-    data[deckId] = {
-      ...data[deckId],
+    data[id] = {
+      ...data[id],
       cards: [
-        ...data[deckId].cards,
-        { question: card.question, answer: card.answer }
+        ...data[id].cards,
+        { question: question, answer: answer }
       ]
     }
 
