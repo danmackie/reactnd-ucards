@@ -61,10 +61,10 @@ export const saveDeck = deck => {
 export const saveCard = (id, question, answer) => {
   return AsyncStorage.getItem(STORAGE_KEY).then(results => {
     const data = JSON.parse(results)
-    console.log('id = ', id);
-    console.log('question = ', question);
-    console.log('answer = ', answer);
-    console.log('data = ', data);
+    // console.log('id = ', id);
+    // console.log('question = ', question);
+    // console.log('answer = ', answer);
+    // console.log('data = ', data);
 
     data[id] = {
       ...data[id],
@@ -78,3 +78,8 @@ export const saveCard = (id, question, answer) => {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   })
 }
+
+// export function clearLocalNotification () {
+//   return AsyncStorage.removeItem(NOTIFICATION_KEY)
+//     .then(Notifications.cancelAllScheduledNotificationsAsync)
+// }

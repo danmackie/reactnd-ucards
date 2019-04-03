@@ -51,12 +51,11 @@ class NewDeckView extends Component {
 
     this.props.dispatch(addDeck(deck.id, deck.title, deck.bgcolor))
     saveDeck(deck)
-    // navigation.navigate("DeckView", { id: id, deckname: deckname })
     this.props.navigation.navigate("DeckView", {
       id: deck.id,
       deckname: deck.title
     })
-
+    // this.props.navigation.push("Home")
     this.setState(() => ({
       title: ""
     }))

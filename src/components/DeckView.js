@@ -26,22 +26,9 @@ import { pink, white } from '../utils/colors';
 
 class DeckView extends Component {
 
-  state = {
-    hascards: false
-  }
-
   static navigationOptions = ({ navigation }) => ({
     title: navigation.getParam("deckname")
   })
-
-  componentDidMount() {
-    // console.log('this.props.deck = ', this.props.deck);
-    this.setState({ hascards: this.props.deck.cards.length > 0 });
-  }
-
-  callbackAddCard = (question, answer) => {
-
-  }
 
   handleAddCard = () => {
     const { deck } = this.props
@@ -49,9 +36,7 @@ class DeckView extends Component {
   }
 
   render() {
-    const { hascards } = this.state
-    const { deck } = this.props
-
+    const { deck, hascards } = this.props
     return (
       hascards
         ?
@@ -86,9 +71,10 @@ class DeckView extends Component {
 }
 
 const mapStateToProps = (state, { navigation }) => {
-  // console.log('state[navigation.getParam("id")] = ', state[navigation.getParam("id")]);
+  // console.log('state[navigation.getParam("id")] = ', state[navigation.getParam("id")])
   return {
-    deck: state[navigation.getParam("id")]
+    deck: state[navigation.getParam("id")],
+    hascards: state[navigation.getParam("id")].cards.length > 0
   }
 }
 

@@ -36,7 +36,7 @@ const DeckStack = ({ bgcolor, navigation, numcards, deckname, id }) => (
   </Card>
 )
 
-export default DeckStack;
+export default DeckStack
 
 const styles = StyleSheet.create({
   card: {
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#aaaaaa',
   },
-});
+})

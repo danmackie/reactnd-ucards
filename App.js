@@ -94,7 +94,6 @@ export default class App extends React.Component {
       'sura-bold': require('./assets/fonts/Sura-Bold.ttf'),
       'sura': require('./assets/fonts/Sura-Regular.ttf'),
       'material': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
-      // 'feather': require('./node_modules/react-native-vector-icons/Fonts/Feather.ttf')
     });
     //setLocalNotification();
     this.setState({ fontLoaded: true });

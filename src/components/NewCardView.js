@@ -23,8 +23,7 @@ class NewCardView extends Component {
 
     this.props.dispatch(addCard(id, question, answer))
     saveCard(id, question, answer)
-
-    this.props.navigation.goBack()
+      .then(this.props.navigation.goBack())
 
     //Reset state
     this.setState({
@@ -70,17 +69,11 @@ const styles = StyleSheet.create({
   textstyle: {
     fontSize: 32,
     fontFamily: 'sura-bold',
-    // textAlign: 'center',
   },
   input: {
     backgroundColor: white,
     width: 350,
-    // fontSize: 20,
     height: 100,
-    // padding: 10,
-    // borderRadius: 1,
-    // borderColor: gray,
-    // margin: 20,
   },
   addbtn: {
     backgroundColor: pink,

@@ -19,7 +19,7 @@ class DeckListView extends Component {
         decks => this.props.dispatch(setDecks(decks))
       )
       .then(() => {
-        this.setState({ loaded: true });
+        this.setState({ loaded: true })
       })
   }
 
@@ -75,7 +75,7 @@ class DeckListView extends Component {
 
 const mapStateToProps = decks => ({
   decks
-});
+})
 
 export default connect(mapStateToProps)(DeckListView)
 
