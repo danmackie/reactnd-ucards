@@ -1,21 +1,3 @@
-//TODO: Create deck representation for DeckListView, click opens deck
-//Type: Functional stateless component
-//
-//UI
-//1, 2 or 3 cards for that number of cards, and 3 cards to represent >3 cards in the deck
-//a dotted line for 0 cards
-//number of cards in deck
-//name of deck
-//stats (optional)
-//
-//Functionality:
-//OnClick: Opens DeckView
-//
-//Data:
-//None
-//
-//Props:
-//Deck data fragments - deckname, numcards, [Stats (TBC/Optional)]
 import * as React from 'react';
 import { StyleSheet } from "react-native";
 import { Card, Title } from 'react-native-paper';

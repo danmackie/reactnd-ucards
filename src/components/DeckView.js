@@ -1,22 +1,3 @@
-//TODO:
-//Type: Redux component
-//
-//UI
-//Two UI layouts - empty and a view with one card to represent all cards.
-//Empty view - Message text with FAB button to add card.
-//Non-empty view - cardstack UI element with two buttons, 'Start quiz' and 'Delete deck' (optional), with add card FAB button at normal bottom left position. 
-//
-//Functionality:
-//FAB add button - onClick goes to NewCardView
-//Delete deck button (optional) - onClick prompts with dialog and then goes to DeckListView 
-//Start quiz button - onClick goes to QuizView passing props
-//
-//Data:
-//Deck object
-//
-//Props:
-//TBC
-
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, FAB } from 'react-native-paper';
@@ -35,6 +16,11 @@ class DeckView extends Component {
     this.props.navigation.navigate("NewCardView", { deckId: deck.id })
   }
 
+  handleStartQuiz = () => {
+    const { deck } = this.props
+    this.props.navigation.navigate("QuizView", { deck: deck })
+  }
+
   render() {
     const { deck, hascards } = this.props
     return (
@@ -42,7 +28,11 @@ class DeckView extends Component {
         ?
         <View style={styles.container}>
           <SingleCard bgcolor={deck.bgcolor} numcards={deck.cards.length} />
-          <Button style={styles.startquizbtn} mode="contained" onPress={() => console.log('Pressed')}>
+          <Button
+            style={styles.startquizbtn}
+            mode="contained"
+            onPress={this.handleStartQuiz}
+          >
             Start quiz
           </Button>
           <FAB
@@ -64,14 +54,12 @@ class DeckView extends Component {
             icon="add"
             onPress={this.handleAddCard}
           />
-          {/* <ActivityIndicator size='large' style={styles.paddout} animating={true} color={pink} /> */}
         </View>
     )
   }
 }
 
 const mapStateToProps = (state, { navigation }) => {
-  // console.log('state[navigation.getParam("id")] = ', state[navigation.getParam("id")])
   return {
     deck: state[navigation.getParam("id")],
     hascards: state[navigation.getParam("id")].cards.length > 0
@@ -81,6 +69,10 @@ const mapStateToProps = (state, { navigation }) => {
 export default connect(mapStateToProps)(DeckView)
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 6,
+  },
   container_empty: {
     flex: 1,
     justifyContent: 'center',
@@ -99,10 +91,6 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
     margin: 10,
-  },
-  container: {
-    flex: 1,
-    padding: 6,
   },
   fab: {
     position: 'absolute',

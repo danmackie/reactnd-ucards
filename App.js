@@ -11,7 +11,8 @@ import NewCardView from './src/components/NewCardView';
 import NewDeckView from './src/components/NewDeckView';
 import QuizView from './src/components/QuizView';
 import reducer from './src/reducers';
-import { purple, white } from './src/utils/colors';
+import { pink, purple, white } from './src/utils/colors';
+import { setLocalNotification } from './src/utils/helpers';
 
 const UCardsStatusBar = ({ backgroundColor, ...props }) => (
   <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -45,23 +46,26 @@ const Tabs = createBottomTabNavigator(
       header: null
     },
     tabBarOptions: {
-      activeTintColor: purple,
+      activeTintColor: pink,
       style: {
-        height: 60,
+        height: 70,
         backgroundColor: white,
-        shadowColor: "rgba(0, 0, 0, 0.24)",
+        shadowColor: "rgba(0, 0, 0, 0.2)",
         shadowOffset: {
           width: 0,
-          height: 3
+          height: 5
         },
         shadowRadius: 6,
         shadowOpacity: 1
       },
       labelStyle: {
-        paddingTop: 3,
-        fontSize: 14,
+        paddingTop: 0,
+        paddingBottom: 5,
+        fontSize: 16,
         fontWeight: "bold"
-      }
+      },
+      resetOnBlur: true,
+      backBehavior: 'order'
     }
   }
 );
@@ -77,7 +81,7 @@ const AppContainer = createAppContainer(createStackNavigator(
     initialRouteName: "Home",
     navigationOptions: {
       headerTintColor: white,
-      headerStyle: { backgroundColor: purple },
+      headerStyle: { backgroundColor: pink },
       headerTitleStyle: { fontWeight: "bold" }
     }
   }
@@ -95,7 +99,7 @@ export default class App extends React.Component {
       'sura': require('./assets/fonts/Sura-Regular.ttf'),
       'material': require('./node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf'),
     });
-    //setLocalNotification();
+    setLocalNotification();
     this.setState({ fontLoaded: true });
   }
 

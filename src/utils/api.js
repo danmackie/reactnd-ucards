@@ -1,6 +1,9 @@
 import { AsyncStorage } from "react-native";
 
+
+export const STORAGE_KEY = "Udacity:Storagekey"
 let TESTMODE = false
+
 //DUMMY DATA
 const getDummyData = () => {
   let dummydecks = {
@@ -41,21 +44,11 @@ const getDummyData = () => {
   return dummydecks
 }
 
-export const STORAGE_KEY = "Udacity:Storagekey"
-
 export const getDecks = () => {
   return AsyncStorage.getItem(STORAGE_KEY).then(results => {
     const data = JSON.parse(results)
-    // console.log('API getDecks: ', data)
     return TESTMODE ? getDummyData() : data
   })
-}
-
-export const saveDeck = deck => {
-  return AsyncStorage.mergeItem(
-    STORAGE_KEY,
-    JSON.stringify({ [deck.id]: deck })
-  )
 }
 
 export const saveCard = (id, question, answer) => {
@@ -74,12 +67,13 @@ export const saveCard = (id, question, answer) => {
       ]
     }
 
-    // Save updated deck data back to storage
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   })
 }
 
-// export function clearLocalNotification () {
-//   return AsyncStorage.removeItem(NOTIFICATION_KEY)
-//     .then(Notifications.cancelAllScheduledNotificationsAsync)
-// }
+export const saveDeck = deck => {
+  return AsyncStorage.mergeItem(
+    STORAGE_KEY,
+    JSON.stringify({ [deck.id]: deck })
+  )
+}

@@ -1,5 +1,4 @@
-
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet } from "react-native";
 import { Card, Title } from 'react-native-paper';
 import { getPlural } from '../utils/helpers';

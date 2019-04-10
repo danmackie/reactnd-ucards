@@ -1,28 +1,7 @@
-//TODO:
-//Type: Standard stateful component
-//
-//UI
-//Single line text input field 'Deck name' (char counter limiter 50 optional)
-//A button to 'Create'
-//A 'Cancel' button
-//A header 'Create new deck'
-//A Back arrow in header
-//
-//Functionality:
-//State checking field input to effect Add button disabled
-//(Char counters optional on fields)
-//Add card button onClick  
-//
-//Data:
-//NONE
-//
-//Props:
-//Callback function
-
 import React, { Component } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text } from "react-native";
-// import { KeyboardAvoidingView, StyleSheet, Text, TextInput } from "react-native";
 import { Button, TextInput } from 'react-native-paper';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { connect } from "react-redux";
 import { addDeck } from "../actions";
 import { saveDeck } from "../utils/api";
@@ -41,21 +20,23 @@ class NewDeckView extends Component {
     }))
   }
 
-  handleCancel = () => {
-    //TODO:
-  }
+  resetAction = StackActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'Home' })],
+  })
 
   handleSubmit = () => {
-    //create empty deck with title from state
     deck = createNewDeckObject(this.state.title)
 
     this.props.dispatch(addDeck(deck.id, deck.title, deck.bgcolor))
     saveDeck(deck)
+
+    //Call to reset tab nav to NOT go back to new deck screen
+    this.props.navigation.dispatch(this.resetAction)
     this.props.navigation.navigate("DeckView", {
       id: deck.id,
       deckname: deck.title
     })
-    // this.props.navigation.push("Home")
     this.setState(() => ({
       title: ""
     }))
@@ -73,22 +54,13 @@ class NewDeckView extends Component {
           placeholder="Subject..."
           onChangeText={this.handleChange}
         />
-        {/* <View style={styles.right}>
-          <Button style={styles.cancelbtn} mode="text" onPress={this.handleCancel}>
-            Cancel
-          </Button> */}
         <Button style={styles.addbtn} mode="contained" onPress={this.handleSubmit}>
           Add deck
         </Button>
-        {/* </View> */}
       </KeyboardAvoidingView>
     )
   }
 }
-
-// const mapDispatchToProps = dispatch => ({
-//   createDeck: (id, deckName) => dispatch(addDeck(id, deckName))
-// })
 
 export default connect()(NewDeckView)
 
@@ -101,17 +73,11 @@ const styles = StyleSheet.create({
   textstyle: {
     fontSize: 32,
     fontFamily: 'sura-bold',
-    // textAlign: 'center',
   },
   input: {
     backgroundColor: white,
     width: 350,
-    // fontSize: 20,
     height: 100,
-    // padding: 10,
-    // borderRadius: 1,
-    // borderColor: gray,
-    // margin: 20,
   },
   addbtn: {
     backgroundColor: pink,

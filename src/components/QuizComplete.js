@@ -1,78 +1,51 @@
-//TODO:
-//Type: Functional stateless component
-//
-//UI
-//H1 text of 'Quiz complete!'
-//Body text of example 'You got 1 out of 1 correct, that’s 100%!'
-//Two buttons - 'Start again' and 'Back to deck'
-//
-//Functionality:
-//'Start again' onClick - callback to handle
-//'Back to deck' onClick - callback to handle
-//  
-//Data:
-//NONE
-//
-//Props:
-//Total cards and total correct from QuizView state
-
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { pink } from "../utils/colors";
+import { Button } from 'react-native-paper';
+import { gray, purple, white } from "../utils/colors";
 
 const QuizComplete = (props) => {
 
-  const { totalcards, totalcorrect, restartQuiz, backToDeck } = props
-
-  //PLACEHOLDER VALUES
-  // totalcards = 7
-  // totalcorrect = 5
-
-  const getPercentage = () => {
-    return totalcorrect / totalcards * 100
-  }
+  const { correct, incorrect, restartQuiz, navigation } = props
 
   return (
-    <View>
-      <Text style={styles.textstyle}>
-        Quiz complete!
-      </Text>
-      <Text style={styles.textstyle}>
-        You got {totalcorrect} correct, that's {getPercentage()}%
+    <View style={styles.container}>
+      <Text style={styles.header}>You scored</Text>
+      <Text style={styles.result}>
+        {`${Math.round((correct * 100) / (correct + incorrect))} %`}
       </Text>
       <View style={styles.actions}>
-        <StyledButton
-          onPress={() => restartQuiz()}
-          style={{ backgroundColor: pink }}
+        <Button onPress={() => restartQuiz()}>Restart Quiz</Button>
+        <Button
+          onPress={() => navigation.goBack()}
+          style={{ backgroundColor: gray }}
         >
-          Start again
-        </StyledButton>
-        <StyledButton
-          onPress={() => backToDeck()}
-          style={{ backgroundColor: pink }}
-        >
-          Back to deck
-      </StyledButton>
+          Back to Deck
+      </Button>
       </View>
     </View>
-  );
-};
-
-QuizComplete.propTypes = {
-  totalcards = PropTypes.number.isRequired,
-  totalcorrect = PropTypes.number.isRequired,
-  restartQuiz = PropTypes.func.isRequired,
-  backToDeck = PropTypes.func.isRequired,
+  )
 }
 
-export default QuizComplete;
+export default QuizComplete
 
 const styles = StyleSheet.create({
-  textstyle: {
-    fontFamily: 'sura-bold',
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: white
   },
-  buttongroup: {
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  result: {
+    fontSize: 70,
+    color: purple,
+    textAlign: "center"
+  },
+  actions: {
     marginTop: 50
   }
 });
