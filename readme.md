@@ -38,7 +38,7 @@ This is a [React Native](https://facebook.github.io/react-native/) app and was b
     },
 ```
 
-This application could certainly be enhanced (such as enabling deletion support for decks and cards), but as of right now it delivers on the requirements for the Udacity React Nanodegree. It also uses Material Design Paper as component styling.
+This application could certainly be enhanced (such as enabling deletion support for decks and cards), but as of right now it delivers on the requirements for the Udacity React Nanodegree. It also uses [Material Design Paper](https://reactnativepaper.com/) for component styling.
 
 ## Platforms
 
